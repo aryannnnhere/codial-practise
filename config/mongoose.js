@@ -11,4 +11,3 @@ async function main() {
 }
 module.exports = db;
 
-module.exports = db;
