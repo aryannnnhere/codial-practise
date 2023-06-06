@@ -1,6 +1,35 @@
-<link rel="stylesheet" href="/css/extra.css">
+<!-- <link rel="stylesheet" href="/css/extra.css"> -->
 
         <h1>
             codial / <%=title%>
         </h1>
+
+
+
+        <section id="feed-posts">
+            <h4>Posts</h4>
+            <form action="/posts/create" id="new-post-form" method="POST">
+                <textarea name="content" cols="30" rows="3" placeholder="Type Here..."></textarea>
+                <input type="submit" value="Post">
+            </form>
+        
+            <div id="posts-list-container">
+                <ul>
+                    <% for(post of posts){ %>
+                        
+                    <li>
+                        <p>
+                            <%= post.content %>
+                            <br>
+                            <small>
+                                <%= post.user %>
+                            </small>
+                        </p>
+                        
+                    </li>
+                        
+                    <%} %>
+                </ul>
+            </div>
+        </section>        
  
