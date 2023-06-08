@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "my all social media web application",
   "main": "index.js",
-  "scripts": {
+  "scripts":  {
+    "start": "nodemon index.js",
+    "sass": " sass --watch assets/scss:assets/css ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
