@@ -8,15 +8,16 @@ const {request} = require('express');
 
 //  authentication using passport
 passport.use(new LocalStrategy({
-    usernameField : 'email'
+    usernameField : 'email',
+    passReqToCallback: true
     },
-    function(email , password , done){
+    function(req, email , password , done){
         // finding a user and establishing the identity
         // first email is the email we are looking for that is stored in database
         // second email is the email we passed in this function along with password
         User.findOne({email : email} , function(err , user){
             if(err){
-                console.log('error in finding user --> passport');
+                req.flash('error',err);
                 return done(err);
             }
             // user.password is for password stored in database(actual password)
@@ -25,8 +26,8 @@ passport.use(new LocalStrategy({
             // function along with email.
 
             if(!user || user.password != password){
-                console.log('Invalid username password');
-                return(null , false);
+               req.flash('error' ,'Invalid Username/password');
+               return(null , false);
             }
             return done(null , user);
 
