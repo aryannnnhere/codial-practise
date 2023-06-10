@@ -11,33 +11,35 @@ passport.use(new LocalStrategy({
     usernameField : 'email',
     passReqToCallback: true
     },
-    function(req, email , password , done){
+  async function(req, email , password , done){
         // finding a user and establishing the identity
         // first email is the email we are looking for that is stored in database
         // second email is the email we passed in this function along with password
-        User.findOne({email : email} , function(err , user){
-            if(err){
-                req.flash('error',err);
-                return done(err);
-            }
-            // user.password is for password stored in database(actual password)
+        let user;
+        try {
+            user = await  User.findOne({email : email})
+        }
+        catch (err){
+            req.flash('error',err);
+            return done(err);
+                }
+                // user.password is for password stored in database(actual password)
+    
+                // 2 password is for the password typed in the browser nowwhich is passed in the 
+                // function along with email.
+            
+        
+         if(!user || user.password != password) {
 
-            // 2 password is for the password typed in the browser nowwhich is passed in the 
-            // function along with email.
-
-            if(!user || user.password != password){
-               req.flash('error' ,'Invalid Username/password');
-               return(null , false);
+             req.flash("error" , "Invalid Username/password");
+                
+              
+            return done(null , false);
             }
             return done(null , user);
 
-        });
-
-    }
-
+        }
 ));
-
-
 
 // serializing the user to decide which key is to be kept in the cookies
 passport.serializeUser(function(user, done ){
