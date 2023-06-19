@@ -31,10 +31,23 @@ module.exports.create = async function(req, res){
 module.exports.destroy = function(req, res){
     Post.findById(req.params.id , function(err, post){
         //  .id means coverting the object id into string
+        if(err){
+            console.log('post is not find');
+        }
+        console.log(post);
         if(post.user == req.user.id){
-            post.remove();
+            post.deleteOne();
 
             Comment.deleteMany({post: req.params.id}, function(err){
+                
+                if(req.xhr){
+                    return res.status(200).json({
+                        data : {
+                            post_id : req.params.id
+                        },
+                        message : "Post deleted"
+                    })
+                }
                 req.flash('success' , 'Post deleted!');
                 return res.redirect('back');
             })
