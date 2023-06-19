@@ -18,7 +18,8 @@ app.use(express.urlencoded());
 app.use(cookieParser());
 
 app.use(express.static('./assets'));
-
+// make the uplaods path available to the browser
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 // syntax for ejs layouts
 app.use(expresslayouts);

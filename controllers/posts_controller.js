@@ -34,7 +34,6 @@ module.exports.destroy = function(req, res){
         if(err){
             console.log('post is not find');
         }
-        console.log(post);
         if(post.user == req.user.id){
             post.deleteOne();
 
